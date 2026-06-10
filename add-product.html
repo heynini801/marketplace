@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moment5 — Enter Product</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f5f3f0;
+      --surface:   #ffffff;
+      --border:    #e2ddd8;
+      --text:      #2a2825;
+      --muted:     #8a8480;
+      --accent:    #6b5e4e;
+      --tag-bg:    #ede9e4;
+      --error:     #b04a3a;
+      --success:   #4a7c59;
+      --hover-shadow: 0 12px 40px rgba(42,40,37,.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 60px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 10;
+    }
+
+    .logo-wrap { display: flex; flex-direction: column; gap: 2px; }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .logo-sub {
+      font-size: 8.5px;
+      letter-spacing: 0.32em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    nav { display: flex; gap: 36px; }
+
+    nav a {
+      font-size: 11px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    .btn-back {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+
+    .btn-back:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 64px 60px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 680px;
+    }
+
+    .page-label {
+      font-size: 9px;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .page-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .page-hero p {
+      font-size: 13px;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 420px;
+      font-weight: 300;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--border);
+      margin: 0 60px 48px;
+    }
+
+    /* ── FORM SECTION ── */
+    .form-section {
+      padding: 0 60px 100px;
+      max-width: 760px;
+    }
+
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 48px 52px;
+    }
+
+    /* ── FIELD GROUPS ── */
+    .field-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 32px;
+      margin-bottom: 28px;
+    }
+
+    .field-group.full {
+      grid-template-columns: 1fr;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field.span-full {
+      grid-column: 1 / -1;
+    }
+
+    /* ── LABELS ── */
+    .field label {
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .field .field-hint {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 300;
+      margin-top: -4px;
+    }
+
+    /* ── INPUTS ── */
+    .field input,
+    .field select,
+    .field textarea {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12.5px;
+      font-weight: 300;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 11px 14px;
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+      width: 100%;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(107,94,78,.08);
+    }
+
+    .field select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a8480'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 88px;
+    }
+
+    /* required star */
+    .required::after {
+      content: ' *';
+      color: var(--accent);
+    }
+
+    /* ── SECTION LABEL ── */
+    .form-section-label {
+      font-size: 8.5px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── SUBMIT AREA ── */
+    .form-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .form-note {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-submit {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10.5px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* spinner */
+    .spinner {
+      width: 13px;
+      height: 13px;
+      border: 1.5px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-label { opacity: 0.7; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── SUCCESS OVERLAY ── */
+    .success-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(245,243,240,.92);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .success-overlay.visible {
+      display: flex;
+    }
+
+    .success-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 56px 64px;
+      max-width: 440px;
+      width: 90%;
+      text-align: center;
+      box-shadow: var(--hover-shadow);
+      animation: fadeUp .4s forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .success-icon {
+      width: 44px;
+      height: 44px;
+      border: 1.5px solid var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .success-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--success);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .success-label {
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--success);
+      margin-bottom: 12px;
+    }
+
+    .success-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 28px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .success-card p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 32px;
+    }
+
+    .success-redirect {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    .success-redirect strong {
+      color: var(--accent);
+    }
+
+    /* ── ERROR MESSAGE ── */
+    .error-msg {
+      display: none;
+      background: #fdf3f2;
+      border: 1px solid #e8c5c0;
+      border-radius: 2px;
+      padding: 14px 18px;
+      margin-top: 20px;
+      font-size: 11.5px;
+      color: var(--error);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .error-msg.visible { display: block; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    .footer-copy {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      header, .page-hero, .form-section, .divider, footer {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+      .form-card { padding: 32px 24px; }
+      .field-group { grid-template-columns: 1fr; }
+      .field.span-full { grid-column: auto; }
+      .btn-back { display: none; }
+      .form-actions { flex-direction: column; align-items: stretch; }
+      .btn-submit { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="success-label">Product Saved</div>
+    <h2>Added to the Collection</h2>
+    <p>Your product has been recorded in the sheet and will appear in the store once the page refreshes its data.</p>
+    <div class="success-redirect">Returning to shop in <strong id="countdown">3</strong>s…</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-wrap">
+    <a class="logo" href="index.html">MOMENT<span>5</span></a>
+    <span class="logo-sub">Leather Journals &amp; Stationery</span>
+  </div>
+  <div class="header-right">
+    <nav>
+      <a href="index.html">Shop</a>
+      <a href="#">About</a>
+      <a href="#">Care</a>
+      <a href="#">Contact</a>
+    </nav>
+    <a class="btn-back" href="index.html">← Back to Shop</a>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <span class="page-label">Catalogue Management</span>
+  <h1>Enter a New<br>Product</h1>
+  <p>Fill in the details below to add a product to the Moment5 collection. All fields marked * are required.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- FORM -->
+<section class="form-section">
+  <div class="form-card">
+
+    <!-- Section: Identity -->
+    <div class="form-section-label">Product Identity</div>
+    <div class="field-group">
+
+      <div class="field">
+        <label class="required" for="f-category">Category</label>
+        <select id="f-category" name="category">
+          <option value="" disabled selected>Select a category</option>
+          <option value="journal">Journal</option>
+          <option value="refill">Refill</option>
+          <option value="accessory">Accessory</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="required" for="f-name">Product Name</label>
+        <input type="text" id="f-name" name="name" placeholder="e.g. Heritage A5 Binder" />
+      </div>
+
+      <div class="field">
+        <label class="required" for="f-sub">Subtitle / Size</label>
+        <span class="field-hint">Short descriptor shown under the name</span>
+        <input type="text" id="f-sub" name="sub" placeholder="e.g. Full-grain, A5" />
+      </div>
+
+      <div class="field">
+        <label class="required" for="f-price">Price</label>
+        <span class="field-hint">Include currency symbol</span>
+        <input type="text" id="f-price" name="price" placeholder="e.g. $120" />
+      </div>
+
+    </div>
+
+    <!-- Section: Description -->
+    <div class="form-section-label">Description &amp; Presentation</div>
+    <div class="field-group">
+
+      <div class="field span-full">
+        <label class="required" for="f-desc">Description</label>
+        <span class="field-hint">One or two sentences about the product</span>
+        <textarea id="f-desc" name="desc" placeholder="e.g. Vegetable-tanned leather with hand-stitched spine and brass closures."></textarea>
+      </div>
+
+      <div class="field span-full">
+        <label class="required" for="f-img">Image URL</label>
+        <span class="field-hint">Direct link to a publicly accessible image</span>
+        <input type="url" id="f-img" name="img" placeholder="https://images.example.com/product.jpg" />
+      </div>
+
+      <div class="field">
+        <label for="f-badge">Badge Label <span style="color:var(--muted);font-weight:300;letter-spacing:0">(optional)</span></label>
+        <span class="field-hint">Small tag shown on the card, e.g. New, Sale</span>
+        <input type="text" id="f-badge" name="badge" placeholder="e.g. New" />
+      </div>
+
+    </div>
+
+    <!-- Error message -->
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <span class="form-note">* Required fields</span>
+      <button class="btn-submit" id="btnSubmit" onclick="submitProduct()">
+        <div class="spinner"></div>
+        <span class="btn-label">Save Product</span>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">MOMENT5</span>
+  <span class="footer-copy">© 2025 Moment5. All rights reserved.</span>
+</footer>
+
+<script>
+  // ─────────────────────────────────────────────
+  // CONFIGURATION
+  // Paste your deployed Google Apps Script Web App URL below.
+  // ─────────────────────────────────────────────
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyKsqOWBbcfut5m2u-6FXhaM9u6j3-DtuBVti50AmojYGbp-ctftrCAGfEAwZuWKSK2pg/exec";
+
+  // ─────────────────────────────────────────────
+  // HELPERS
+  // ─────────────────────────────────────────────
+  function getField(id) {
+    return document.getElementById(id).value.trim();
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg;
+    el.classList.add('visible');
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function hideError() {
+    document.getElementById('errorMsg').classList.remove('visible');
+  }
+
+  function setLoading(on) {
+    const btn = document.getElementById('btnSubmit');
+    btn.disabled = on;
+    btn.classList.toggle('loading', on);
+  }
+
+  function showSuccess() {
+    document.getElementById('successOverlay').classList.add('visible');
+    let count = 3;
+    const el = document.getElementById('countdown');
+    const interval = setInterval(() => {
+      count--;
+      el.textContent = count;
+      if (count <= 0) {
+        clearInterval(interval);
+        window.location.href = 'index.html';
+      }
+    }, 1000);
+  }
+
+  // ─────────────────────────────────────────────
+  // SUBMIT
+  // Reads form fields, validates, sends to Google
+  // Apps Script via fetch() with URL parameters,
+  // then shows success overlay or error message.
+  // ─────────────────────────────────────────────
+  async function submitProduct() {
+    hideError();
+
+    // Read values — field names match the CSV column names exactly
+    const data = {
+      category : getField('f-category'),
+      name     : getField('f-name'),
+      sub      : getField('f-sub'),
+      desc     : getField('f-desc'),
+      price    : getField('f-price'),
+      badge    : getField('f-badge'),   // optional
+      img      : getField('f-img'),
+    };
+
+    // Validate required fields
+    const required = ['category', 'name', 'sub', 'desc', 'price', 'img'];
+    for (const key of required) {
+      if (!data[key]) {
+        showError(`Please fill in the "${key}" field before saving.`);
+        return;
+      }
+    }
+
+    // Check URL is still a placeholder
+    if (WEB_APP_URL === "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+      showError('No Web App URL set. Open add-product.html and replace the WEB_APP_URL placeholder with your deployed Google Apps Script URL.');
+      return;
+    }
+
+    // Build query string from data object
+    const params = new URLSearchParams(data).toString();
+    const requestURL = `${WEB_APP_URL}?${params}`;
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(requestURL);
+      const json = await res.json();
+
+      if (json.status === 'success') {
+        showSuccess();
+      } else {
+        showError(`Submission failed: ${json.message || 'Unknown error from server.'}`);
+        setLoading(false);
+      }
+    } catch (err) {
+      showError(`Could not reach the server. Check your Web App URL and internet connection. (${err.message})`);
+      setLoading(false);
+    }
+  }
+</script>
+</body>
+</html>
